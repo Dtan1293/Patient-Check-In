@@ -2,12 +2,37 @@ $(function() {
 	$(document).ready(function() {
 		$("#submit_button").click(function() {
 			clicked();
-
+		});
+		//helps prevent the form being submitted when ipad return button is pressed!
+		$("form").submit(function(event) {
+   			document.activeElement.blur();
 		});
 		function clicked() {
 
 			//grab patient's name, get rid of extra spaces
 			var patient_name = $("#name").val().trim();
+			if(patient_name.length === 0) {
+				alert("Please fill out your full name!");
+				return;
+			}
+
+			//grab provider radio button:
+			var provider;
+			if($( "input:radio[name=Provider]:checked" ).length === 0) {
+				alert("No provider selected!");
+				return;
+			} else {
+				provider = $( "input:radio[name=Provider]:checked" ).val();
+			}
+
+			//grab the reason for visit radio button:
+			var reason_for_visit;
+			if($( "input:radio[name=RFV]:checked" ).length === 0) {
+				alert("Please select reason for visit!");
+				return;
+			} else {
+				reason_for_visit = $( "input:radio[name=RFV]:checked" ).val();
+			}
 
 			//grab the current time so patient doesn't have to enter it
 			var d = new Date();
@@ -23,12 +48,6 @@ $(function() {
 			}
 
 			var time = hours + ":" + d.getMinutes() + ":" + d.getSeconds() + AM_PM;
-
-			//grab provider radio button:
-			var provider = $( "input:radio[name=Provider]:checked" ).val();
-
-			//grab the reason for visit radio button:
-			var reason_for_visit = $( "input:radio[name=RFV]:checked" ).val();
 			//storing information on the database!
 			var ref = new Firebase("https://medicallogin2193.firebaseio.com/");
 			var usersRef = ref.child("patients");

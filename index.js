@@ -7,32 +7,19 @@ $(function() {
 		$("form").submit(function(event) {
    			document.activeElement.blur();
 		});
+
+		//if user clicks anywhere on the website, it will direct towards input id="name"
+		$("html").click(function(){
+			$("#name").focus();
+		});
+
 		function clicked() {
+			var patient_submitted_data;
 
-			//grab patient's name, get rid of extra spaces
-			var patient_name = $("#name").val().trim();
-			if(patient_name.length === 0) {
-				alert("Please fill out your full name!");
-				return;
-			}
-
-			//grab provider radio button:
-			var provider;
-			if($( "input:radio[name=Provider]:checked" ).length === 0) {
-				alert("No provider selected!");
-				return;
-			} else {
-				provider = $( "input:radio[name=Provider]:checked" ).val();
-			}
-
-			//grab the reason for visit radio button:
-			var reason_for_visit;
-			if($( "input:radio[name=RFV]:checked" ).length === 0) {
-				alert("Please select reason for visit!");
-				return;
-			} else {
-				reason_for_visit = $( "input:radio[name=RFV]:checked" ).val();
-			}
+			patient_submitted_data = checkInfo();
+			var patient_name = patient_submitted_data[0];
+			var provider = patient_submitted_data[1];
+			var reason_for_visit = patient_submitted_data[2];
 
 			//grab the current time so patient doesn't have to enter it
 			var d = new Date();
@@ -58,8 +45,10 @@ $(function() {
 			 	Provider: provider,
 			 	Reason: reason_for_visit
 			});
+
 			alert("Done! Please press Ok to complete your check-in");
 
+			//send out the email!
 			$.post( 
 			  "send.php",
 			  { 
@@ -69,6 +58,35 @@ $(function() {
 			.done(function( data ) {
 				window.setTimeout(function(){ window.location.reload(true); },1000);
 			});
+		}
+
+		function checkInfo() {
+			var info;
+			//grab patient's name, get rid of extra spaces
+			var patient_name = $("#name").val().trim();
+			if(patient_name.length === 0) {
+				alert("Please fill out your full name!");
+				return;
+			}
+
+			//grab provider radio button:
+			var provider;
+			if($( "input:radio[name=Provider]:checked" ).length === 0) {
+				alert("No provider selected!");
+				return;
+			} else {
+				provider = $( "input:radio[name=Provider]:checked" ).val();
+			}
+
+			//grab the reason for visit radio button:
+			var reason_for_visit;
+			if($( "input:radio[name=RFV]:checked" ).length === 0) {
+				alert("Please select reason for visit!");
+				return;
+			} else {
+				reason_for_visit = $( "input:radio[name=RFV]:checked" ).val();
+			}
+			return info = [patient_name, provider, reason_for_visit];
 		}
 	});
 });

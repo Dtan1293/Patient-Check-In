@@ -2,6 +2,10 @@
 
 /* = body
 ------------------------*/
+.strikeOut {
+  text-decoration: line-through;
+}
+
 body{
   background: #2C4770;
   font-family: 'Lato', sans-serif;

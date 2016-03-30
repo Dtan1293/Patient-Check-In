@@ -1,4 +1,7 @@
 $(function() {
+	//temp solution for storing email addresses! This will be put on the database!
+	var email_address = ["Dtan1293@gmail.com", "UWDtan1293@gmail.com"];
+	
 	$(document).ready(function() {
 		$("#submit_button").click(function() {
 			clicked();
@@ -43,7 +46,8 @@ $(function() {
 			 	patient: patient_name,
 			 	CheckIn: time,
 			 	Provider: provider,
-			 	Reason: reason_for_visit
+			 	Reason: reason_for_visit,
+			 	display: true
 			});
 
 			alert("Done! Please press Ok to complete your check-in");
@@ -88,5 +92,6 @@ $(function() {
 			}
 			return info = [patient_name, provider, reason_for_visit];
 		}
+
 	});
 });

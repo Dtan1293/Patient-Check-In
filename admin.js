@@ -1,21 +1,43 @@
 $(function() { //wait for the DOM to be ready!
 	var ref = new Firebase("https://medicallogin2193.firebaseio.com/patients");
-	var count = 0;
-	// Attach an asynchronous callback to read the data at our posts reference
+	var count = 1;
+
 	ref.on("child_added", function(data) {
 		var patient_name = data.child("patient").val();
 		var check_in_time = data.child("CheckIn").val();
 		var provider = data.child("Provider").val();
 		var reason = data.child("Reason").val();
+		var should_display = data.child("display").val();
 
-		$("#patient_display_information").append("<tr><td>" + patient_name + 
+		if(should_display === true) {
+			$("#patient_display_information").append("<tr><td>" + patient_name + 
 												 "</td><td>" + check_in_time + 
 												 "</td><td>" + provider + 
-												 "</td><td>" + reason + "</td><td><button id=\"" + count + "\">" +
+												 "</td><td>" + reason + "</td><td><button onclick=\"strikeOutPatient("+ count + ")\" id=\"" + count + "\">" +
 												 "Checked In</button></td></tr>");
-		$("button").one("click", function() {
-			alert("Button " + $(this).attr("id"));
-		});
+		}
 		count++;
 	});
+	
+	
+	// Attach an asynchronous callback to when a child is removed! Just refreshes the page!
+	//Needs to be updated!
+	ref.on("child_removed", function(data) {
+		location.reload();
+	});
+
+	$("#destroy_database").click(function() {
+		if(confirm("Are you sure?") == true) {
+			ref.remove();
+			location.reload();
+		}
+		else {
+			return;
+		}
+	});
 });
+
+function strikeOutPatient(patient_number) {
+	$("tr").eq(patient_number).addClass("strikeOut");
+
+}

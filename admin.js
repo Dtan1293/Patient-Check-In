@@ -1,4 +1,5 @@
-var ref = new Firebase("https://medicallogin2193.firebaseio.com/patients");
+var ref = new Firebase("https://medicallogin2193.firebaseio.com/patients"); //changed to the firebase link
+
 $(function() { //wait for the DOM to be ready!
 	var count = 1;
 	ref.on("child_added", function(data) {
@@ -14,6 +15,8 @@ $(function() { //wait for the DOM to be ready!
 												 "</td><td>" + provider + 
 												 "</td><td>" + reason + "</td><td><button onclick=\"strikeOutPatient("+ count + ")\" id=\"" + count + "\">" +
 												 "Checked In</button></td></tr>");
+		} else {
+			
 		}
 		count++;
 	});
@@ -46,7 +49,6 @@ function strikeOutPatient(patient_number) {
 
 	ref.once("value", function(snapshotparent) {
 		snapshotparent.forEach(function(childSnapshot) {
-			console.log(childSnapshot.key());
 			if (count === patient_number - 1) {
 				string += childSnapshot.key();
 			}

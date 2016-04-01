@@ -1,3 +1,5 @@
+var ref = new Firebase("https://medicallogin2193.firebaseio.com/"); //changed to the firebase link
+
 $(function() {
 	//temp solution for storing email addresses! This will be put on the database!
 	var email_address = ["Dtan1293@gmail.com", "UWDtan1293@gmail.com"];
@@ -50,7 +52,6 @@ $(function() {
 
 			var time = hours + ":" + minutes + ":" + d.getSeconds() + AM_PM;
 			//storing information on the database!
-			var ref = new Firebase("https://medicallogin2193.firebaseio.com/");
 			var usersRef = ref.child("patients");
 			var newPatients = usersRef.push(); //how do you tell when data has been successfu lly transferred?
 			newPatients.set({

@@ -1,5 +1,13 @@
 @import url('http://fonts.googleapis.com/css?family=Lato');
 
+h1 {
+  color: white;
+}
+
+p {
+  color: white;
+}
+
 /* = body
 ------------------------*/
 .strikeOut {

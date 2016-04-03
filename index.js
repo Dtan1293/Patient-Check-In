@@ -1,7 +1,7 @@
 var ref = new Firebase("https://medicallogin2193.firebaseio.com/"); //changed to the firebase link
 
 $(function() {
-	//temp solution for storing email addresses! This will be put on the database!
+	//temp solution for storing email addresses! This will be put on the database eventually!
 	var email_address = ["Dtan1293@gmail.com", "UWDtan1293@gmail.com"];
 
 	$(document).ready(function() {

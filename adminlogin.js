@@ -1,4 +1,13 @@
 $(function() {
+	var password;
+	var username;
+	//when you hit enter on the keyboard, it's the same as hitting click
+	$(document).keypress(function(e) {
+	    if(e.which == 13) {
+	        $("#submit").trigger("click");
+	    }
+	});
+	
 	$("#submit").click(function() {
 		var username = $("input[name='username']").val();
 		var password = $("input[name='password']").val();

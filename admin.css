@@ -8,6 +8,16 @@ p {
   color: white;
 }
 
+.center {
+  text-align: center;
+}
+
+#submit {
+  margin-top: 2%;
+  width: 100px;
+  padding: 1%;
+}
+
 /* = body
 ------------------------*/
 .strikeOut {

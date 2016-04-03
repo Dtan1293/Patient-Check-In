@@ -1,4 +1,5 @@
-var ref = new Firebase("https://medicallogin2193.firebaseio.com/patients"); //changed to the firebase link
+var ref = new Firebase("https://medicallogin2193.firebaseio.com/patients"); //change the firebase link 
+																			//leave the /patients part
 
 $(function() { //wait for the DOM to be ready!
 	var count = 1;
@@ -16,21 +17,28 @@ $(function() { //wait for the DOM to be ready!
 												 "</td><td>" + reason + "</td><td><button onclick=\"strikeOutPatient("+ count + ")\" id=\"" + count + "\">" +
 												 "Checked In</button></td></tr>");
 		} else {
-			
+			$("#patient_display_information").append("<tr class='strikeOut'><td>" + patient_name + 
+												 "</td><td>" + check_in_time + 
+												 "</td><td>" + provider + 
+												 "</td><td>" + reason + "</td><td><button onclick=\"strikeOutPatient("+ count + ")\" id=\"" + count + "\">" +
+												 "Checked In</button></td></tr>");
 		}
 		count++;
 	});
 	
 	
 	// Attach an asynchronous callback to when a child is removed! Just refreshes the page!
-	//Needs to be updated!
-	/*
-	ref.on("child_removed", function(data) {
+	//This enables multiple computers to have the admin page and if anyone checks in a patient,
+	//the data will be updated for everybody!	
+	ref.on("child_changed", function(data) {
 		location.reload();
 	});
 	
-	*/
-
+	//If an admin removes a patient, not just strikeout, then the page will refresh as well!
+	ref.on("child_removed", function(data) {
+		location.reload();
+	});
+	//This will forver destroy all data in the database!
 	$("#destroy_database").click(function() {
 		if(confirm("Are you sure?") == true) {
 			ref.remove();
@@ -42,6 +50,7 @@ $(function() { //wait for the DOM to be ready!
 	});
 });
 
+//The function that will strikeout the patient as well as update the database!
 function strikeOutPatient(patient_number) {
 	var count = 0;
 	$("tr").eq(patient_number).addClass("strikeOut");

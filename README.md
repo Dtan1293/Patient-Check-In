@@ -9,3 +9,6 @@
 -Finished html/css on index.html
 -successfully linked php and jquery sending out emails
 -browser page will automatically refresh after sending out the email!
+
+4/2/16
+-Finished prototype
